@@ -40,9 +40,18 @@ object FpList {
   def filter[A](list: FpList[A])(f: (A) => Boolean): FpList[A] =
     list match {
       case Nil => Nil
-      case Cons(head, tail) if f(head) => Cons(head, filter(tail)(f))
-      case Cons(_, tail) => filter(tail)(f)
+      case Cons(head, tail) => {
+        val filteredTail = filter(tail)(f)
+        if (f(head)) Cons(head, filteredTail) else filteredTail
+      }
     }
+
+  def filterByFlatMap[A](list: FpList[A])(f: (A) => Boolean): FpList[A] =
+    flatMap(list)(a => if (f(a)) FpList(a) else Nil)
+
+  def flatMap[A,B] (list: FpList[A]) (f: A => FpList[B]): FpList[B] = {
+    foldRight(list, Nil: FpList[B])((value, acc) => append(f(value), acc))
+  }
 
   def foldLeftFromRight[A,B](list: FpList[A], accumulator: B)(f: (B, A) => B): B = {
     def applyFunctionOnReturn(unusedValue: A, listAndAcc: ListAndAccumulator[A,B]): ListAndAccumulator[A,B] =
@@ -81,6 +90,18 @@ object FpList {
     foldLeft(list,0)(_ + _)
 
   def product(list: FpList[Int]) = foldLeft(list,1)(_ * _)
+
+  def zipSum(list1: FpList[Int], list2: FpList[Int]): FpList[Int] = {
+    list1 match {
+      case Nil => list2
+      case Cons(head, tail) => {
+        list2 match {
+          case Nil => list1
+          case Cons(head2, tail2) => Cons(head + head2, zipSum(tail, tail2))
+        }
+      }
+    }
+  }
 
   def addOne(list: FpList[Int]): FpList[Int] =
     map(list)(_ + 1)
