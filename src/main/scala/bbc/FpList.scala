@@ -2,6 +2,7 @@ package bbc
 
 import scala.annotation.tailrec
 
+
 sealed trait FpList[+A] {
   def tail: FpList[A]
 }
@@ -45,6 +46,9 @@ object FpList {
         if (f(head)) Cons(head, filteredTail) else filteredTail
       }
     }
+
+  def reverse[A](list: FpList[A]): FpList[A] =
+    foldLeft(list, Nil: FpList[A])((acc, value) => Cons(value, acc))
 
   def filterByFlatMap[A](list: FpList[A])(f: (A) => Boolean): FpList[A] =
     flatMap(list)(a => if (f(a)) FpList(a) else Nil)
@@ -91,17 +95,14 @@ object FpList {
 
   def product(list: FpList[Int]) = foldLeft(list,1)(_ * _)
 
-  def zipSum(list1: FpList[Int], list2: FpList[Int]): FpList[Int] = {
-    list1 match {
-      case Nil => list2
-      case Cons(head, tail) => {
-        list2 match {
-          case Nil => list1
-          case Cons(head2, tail2) => Cons(head + head2, zipSum(tail, tail2))
-        }
-      }
+  def zipSum(list1: FpList[Int], list2: FpList[Int]): FpList[Int] =
+    zipWith(list1, list2)(_ + _ )
+
+  def zipWith[A,B,C](list1: FpList[A], list2: FpList[B])(f: (A,B) => C): FpList[C] =
+    (list1, list2) match {
+      case (Cons(head1, tail1), Cons(head2, tail2)) => Cons(f(head1, head2), zipWith(tail1, tail2)(f))
+      case _ => Nil
     }
-  }
 
   def addOne(list: FpList[Int]): FpList[Int] =
     map(list)(_ + 1)
