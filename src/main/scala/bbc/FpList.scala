@@ -2,7 +2,6 @@ package bbc
 
 import scala.annotation.tailrec
 
-
 sealed trait FpList[+A] {
   def tail: FpList[A]
 }
@@ -109,6 +108,23 @@ object FpList {
 
   def doubleToString(list: FpList[Double]): FpList[String] =
     map(list)(_.toString)
+
+  def hasSubsequence[A](container: FpList[A], sub: FpList[A]): Boolean = {
+
+    def startsWith[A](container: FpList[A], starting: FpList[A]): Boolean =
+      (container, starting) match {
+        case (_, Nil) => true
+        case (Nil, _) => false
+        case (Cons(head, tail), Cons(starthead, starttail)) =>
+          head == starthead && startsWith(tail, starttail)
+      }
+
+    container match {
+      case Nil => (sub == Nil)
+      case Cons(head, tail) => startsWith(container,sub) || hasSubsequence(tail, sub)
+    }
+  }
+
 
 }
 
