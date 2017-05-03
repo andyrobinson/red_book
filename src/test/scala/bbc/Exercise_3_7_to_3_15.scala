@@ -7,7 +7,7 @@ import FpList._
 class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
   describe("Exercise 3.8 foldRight") {
     it("should reverse the list?") {
-      val result = foldRight(FpList(1, 2, 3), Nil: FpList[Int])(Cons(_, _))
+      val result = foldRight(FpList(1, 2, 3), FpNil: FpList[Int])(Cons(_, _))
       result shouldBe FpList(1, 2, 3)
     }
   }
@@ -17,7 +17,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
       foldRight(list, 0)((_, acc) => acc + 1)
 
     it("should return zero for the empty list") {
-      length(Nil) shouldBe 0
+      length(FpNil) shouldBe 0
     }
 
     it("should return length of non empty list") {
@@ -29,7 +29,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
   describe("Exercise 3.10 foldLeft") {
 
     it("should return base value for empty list") {
-      foldLeft(Nil: FpList[Int], 99)(_ + _) shouldBe 99
+      foldLeft(FpNil: FpList[Int], 99)(_ + _) shouldBe 99
     }
 
     it("should apply the function successively from the left") {
@@ -38,7 +38,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
     }
 
     it("should reverse the list") {
-      val result = foldLeft(FpList(1, 2, 3), Nil: FpList[Int])((acc, value) => Cons(value, acc))
+      val result = foldLeft(FpList(1, 2, 3), FpNil: FpList[Int])((acc, value) => Cons(value, acc))
 
       result shouldBe (FpList(3, 2, 1))
     }
@@ -47,7 +47,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
   describe("Exercise 3.11 sum and product") {
 
     it("should produce zero for the empty list") {
-      sum(Nil) shouldBe 0
+      sum(FpNil) shouldBe 0
     }
 
     it("should add up a list of numbers") {
@@ -56,7 +56,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
     }
 
     it("should return one for the empty list") {
-      product(Nil) shouldBe 1
+      product(FpNil) shouldBe 1
     }
 
     it("should return the product of a list of integers") {
@@ -67,7 +67,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
 
   describe("Exercise 3.12 reverse") {
     it("should reverse the list") {
-      val result = foldLeft(FpList(1, 2, 3), Nil: FpList[Int])((acc, value) => Cons(value, acc))
+      val result = foldLeft(FpList(1, 2, 3), FpNil: FpList[Int])((acc, value) => Cons(value, acc))
 
       result shouldBe (FpList(3, 2, 1))
     }
@@ -77,7 +77,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
   describe("Exercise 3.13 foldRight in terms of Fold Left") {
 
     it("should return 0 for the empty list") {
-      foldRightFromLeft(Nil: FpList[Int], 0)(_ + _) shouldBe 0
+      foldRightFromLeft(FpNil: FpList[Int], 0)(_ + _) shouldBe 0
     }
 
     it("should join characters") {
@@ -85,7 +85,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
     }
 
     it("should preserve the list") {
-      val result = foldRightFromLeft(FpList(1, 2, 3), Nil: FpList[Int])(Cons(_, _))
+      val result = foldRightFromLeft(FpList(1, 2, 3), FpNil: FpList[Int])(Cons(_, _))
       result shouldBe FpList(1, 2, 3)
     }
   }
@@ -93,7 +93,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
   describe("Exercise 3.13 foldLeft in terms of foldRight") {
 
     it("should return base value for empty list") {
-      foldLeftFromRight(Nil: FpList[Int], 99)(_ + _) shouldBe 99
+      foldLeftFromRight(FpNil: FpList[Int], 99)(_ + _) shouldBe 99
     }
 
     it("should apply the function successively from the left") {
@@ -102,7 +102,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
     }
 
     it("should reverse the list") {
-      val result = foldLeftFromRight(FpList(1, 2, 3), Nil: FpList[Int])((acc, value) => Cons(value, acc))
+      val result = foldLeftFromRight(FpList(1, 2, 3), FpNil: FpList[Int])((acc, value) => Cons(value, acc))
 
       result shouldBe (FpList(3, 2, 1))
     }
@@ -111,7 +111,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
   describe("Exercise 3.14 append using foldLeft or foldRight") {
 
     it("should return first list if second list is empty") {
-      append(FpList(7, 6, 5), Nil) shouldBe (FpList(7, 6, 5))
+      append(FpList(7, 6, 5), FpNil) shouldBe (FpList(7, 6, 5))
     }
 
     it("should append second list to first") {
@@ -119,7 +119,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
     }
 
     it("should return second list if first list is empty") {
-      append(Nil, FpList(9,8,7)) shouldBe FpList(9,8,7)
+      append(FpNil, FpList(9,8,7)) shouldBe FpList(9,8,7)
     }
 
   }
@@ -127,7 +127,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
   describe("Exercise 3.15 should flatten a list of lists") {
 
     it("should flatten a list of empty lists into a single Nil") {
-      flatten(FpList(Nil, Nil, Nil)) shouldBe Nil
+      flatten(FpList(FpNil, FpNil, FpNil)) shouldBe FpNil
     }
 
     it("should flatten a list of one list into that list") {
@@ -139,8 +139,8 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
     }
 
     it("should join and flatten multiple lists ") {
-      flatten(FpList(FpList(1,2,3), Nil, FpList(4,5,6), Nil, FpList(99))) shouldBe FpList(1,2,3,4,5,6,99)
-      flatten(FpList(FpList(1,2,3,6,7,8), Nil, FpList(4,5,6), Nil, FpList(99))) shouldBe FpList(1,2,3,4,5,6,99)
+      flatten(FpList(FpList(1,2,3), FpNil, FpList(4,5,6), FpNil, FpList(99))) shouldBe FpList(1,2,3,4,5,6,99)
+      flatten(FpList(FpList(1,2,3,6,7,8), FpNil, FpList(4,5,6), FpNil, FpList(99))) shouldBe FpList(1,2,3,4,5,6,99)
     }
 
 

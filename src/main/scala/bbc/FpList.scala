@@ -6,8 +6,8 @@ sealed trait FpList[+A] {
   def tail: FpList[A]
 }
 
-case object Nil extends FpList[Nothing] {
-  override def tail: FpList[Nothing] = Nil
+case object FpNil extends FpList[Nothing] {
+  override def tail: FpList[Nothing] = FpNil
 }
 
 case class Cons[+A] (head: A, tail: FpList[A]) extends FpList[A]
@@ -16,30 +16,30 @@ case class ListAndAccumulator[A,B](list:FpList[A], accumulator: B)
 
 object FpList {
   def apply[A](as: A*): FpList[A] =
-    if(as.isEmpty) Nil
+    if(as.isEmpty) FpNil
     else Cons(as.head, apply(as.tail: _*))
 
   def foldRight[A,B](list: FpList[A], nilValue:B)(f: (A, B) => B): B =
     list match {
-      case Nil => nilValue
+      case FpNil => nilValue
       case Cons(head, tail) => f(head, foldRight(tail, nilValue)(f))
     }
 
   def foldLeft[A,B](list: FpList[A], accumulator: B)(f: (B, A) => B): B =
     list match {
-      case Nil => accumulator
+      case FpNil => accumulator
       case Cons(head, tail) => foldLeft(tail, f(accumulator, head))(f)
     }
 
   def map[A,B](list: FpList[A])(f:A => B): FpList[B] =
     list match {
-      case Nil => Nil
+      case FpNil => FpNil
       case Cons(head,tail) => Cons(f(head), map(tail)(f))
     }
 
   def filter[A](list: FpList[A])(f: (A) => Boolean): FpList[A] =
     list match {
-      case Nil => Nil
+      case FpNil => FpNil
       case Cons(head, tail) => {
         val filteredTail = filter(tail)(f)
         if (f(head)) Cons(head, filteredTail) else filteredTail
@@ -47,13 +47,13 @@ object FpList {
     }
 
   def reverse[A](list: FpList[A]): FpList[A] =
-    foldLeft(list, Nil: FpList[A])((acc, value) => Cons(value, acc))
+    foldLeft(list, FpNil: FpList[A])((acc, value) => Cons(value, acc))
 
   def filterByFlatMap[A](list: FpList[A])(f: (A) => Boolean): FpList[A] =
-    flatMap(list)(a => if (f(a)) FpList(a) else Nil)
+    flatMap(list)(a => if (f(a)) FpList(a) else FpNil)
 
   def flatMap[A,B] (list: FpList[A]) (f: A => FpList[B]): FpList[B] = {
-    foldRight(list, Nil: FpList[B])((value, acc) => append(f(value), acc))
+    foldRight(list, FpNil: FpList[B])((value, acc) => append(f(value), acc))
   }
 
   def foldLeftFromRight[A,B](list: FpList[A], accumulator: B)(f: (B, A) => B): B = {
@@ -83,9 +83,9 @@ object FpList {
     foldRight(first, second)((a, b) => Cons(a, b))
 
   def flatten[A](listOfLists: FpList[FpList[A]]): FpList[A] =
-    foldRight(listOfLists, Nil: FpList[A])((acc, list) =>
+    foldRight(listOfLists, FpNil: FpList[A])((acc, list) =>
       list match {
-        case Nil => acc
+        case FpNil => acc
         case _ =>  foldRight(acc, list)((a, b) => Cons(a, b))
       })
 
@@ -100,7 +100,7 @@ object FpList {
   def zipWith[A,B,C](list1: FpList[A], list2: FpList[B])(f: (A,B) => C): FpList[C] =
     (list1, list2) match {
       case (Cons(head1, tail1), Cons(head2, tail2)) => Cons(f(head1, head2), zipWith(tail1, tail2)(f))
-      case _ => Nil
+      case _ => FpNil
     }
 
   def addOne(list: FpList[Int]): FpList[Int] =
@@ -113,14 +113,14 @@ object FpList {
 
     def startsWith[A](container: FpList[A], starting: FpList[A]): Boolean =
       (container, starting) match {
-        case (_, Nil) => true
-        case (Nil, _) => false
+        case (_, FpNil) => true
+        case (FpNil, _) => false
         case (Cons(head, tail), Cons(starthead, starttail)) =>
           head == starthead && startsWith(tail, starttail)
       }
 
     container match {
-      case Nil => (sub == Nil)
+      case FpNil => (sub == FpNil)
       case Cons(head, tail) => startsWith(container,sub) || hasSubsequence(tail, sub)
     }
   }

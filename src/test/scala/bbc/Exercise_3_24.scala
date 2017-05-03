@@ -6,12 +6,12 @@ import FpList._
 class Exercise_3_24 extends FunSpec with Matchers {
   describe("ex 3.24 subsequence") {
     it("Nil is a subsequence of anything") {
-      hasSubsequence(Nil, Nil) shouldBe true
-      hasSubsequence(FpList(1,2,3), Nil) shouldBe true
+      hasSubsequence(FpNil, FpNil) shouldBe true
+      hasSubsequence(FpList(1,2,3), FpNil) shouldBe true
     }
 
     it("Anything apart from Nil is not a subsequence of Nil") {
-      hasSubsequence(Nil, FpList(1,2,3)) shouldBe false
+      hasSubsequence(FpNil, FpList(1,2,3)) shouldBe false
     }
 
     it("Should be a subsequence of iteself") {

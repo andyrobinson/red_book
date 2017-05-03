@@ -9,7 +9,7 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
     it("pick out the right one") {
       val x: Int = FpList(1, 2, 3, 4, 5) match {
         case Cons(x, Cons(2, Cons(4, _))) => x
-        case Nil => 42
+        case FpNil => 42
         case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
         case Cons(h, t) => h
         case _ => 101
@@ -24,21 +24,21 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
     def tail[A](list: FpList[A]): FpList[A] =
       list match {
         case Cons(_, t) => t
-        case _ => Nil
+        case _ => FpNil
       }
 
     it("should get the tail of the list") {
       val x = FpList(1,2,3)
 
       x.tail shouldBe FpList(2,3)
-      Nil.tail shouldBe Nil // could also throw an error, use an option
+      FpNil.tail shouldBe FpNil // could also throw an error, use an option
     }
 
     it("should get the tail of the list using the function") {
       val x = FpList(1,2,3)
 
       tail(x) shouldBe FpList(2,3)
-      tail(Nil) shouldBe Nil
+      tail(FpNil) shouldBe FpNil
     }
 
   }
@@ -48,11 +48,11 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
     def setHead[A](newHead: A, list: FpList[A]): FpList[A] =
       list match {
         case Cons(oldHead, tail) => Cons(newHead, tail)
-        case _ => Nil
+        case _ => FpNil
       }
 
     it("should return Nil if the list is Nil ") {
-      setHead[Int](1,Nil) shouldBe Nil
+      setHead[Int](1,FpNil) shouldBe FpNil
     }
 
     it("should replace the head of the list") {
@@ -70,7 +70,7 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
       else
         list match {
           case Cons(_, t) => drop(t,n-1)
-          case _ => Nil
+          case _ => FpNil
         }
 
     it("should get the list if n is zero") {
@@ -85,7 +85,7 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
 
     it("should return Nil if we run out of list") {
       val x = FpList(1,2,3)
-      drop(x,4) shouldBe Nil
+      drop(x,4) shouldBe FpNil
     }
 
 
@@ -102,13 +102,13 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
     }
 
     it ("should return Nil for a Nil list") {
-      dropWhile[Int](Nil, _ > 2) shouldBe Nil
+      dropWhile[Int](FpNil, _ > 2) shouldBe FpNil
     }
 
     it("should return Nil if the condition is true for all elements") {
       val x = FpList(1,2,3)
 
-      dropWhile[Int](x, _ < 10) shouldBe Nil
+      dropWhile[Int](x, _ < 10) shouldBe FpNil
     }
 
     it("should return a list dropping elements until the condition is false") {
@@ -126,7 +126,7 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
       @tailrec
       def reverse2[A](l: FpList[A], acc: FpList[A]): FpList[A] =
         l match {
-          case Nil => acc
+          case FpNil => acc
           case Cons(h,tl) => reverse2(tl,Cons(h, acc))
         }
 
@@ -134,18 +134,18 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
       def init2[A](l: FpList[A], acc: FpList[A]): FpList[A] =
         l match {
           case Cons(h, Cons(h2, tl)) => init2(Cons(h2, tl), Cons(h, acc))
-          case _ => reverse2(acc, Nil)
+          case _ => reverse2(acc, FpNil)
         }
 
-      init2(list, Nil)
+      init2(list, FpNil)
     }
 
     it("should return Nil if the list is Nil") {
-      init(Nil) shouldBe Nil
+      init(FpNil) shouldBe FpNil
     }
 
     it("should return Nil for a single item list") {
-      init(Cons("A", Nil)) shouldBe Nil
+      init(Cons("A", FpNil)) shouldBe FpNil
     }
 
     it("should return all but the last element for non empty lists") {
@@ -153,6 +153,7 @@ class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
 
       init(x) shouldBe FpList(1,2,3)
     }
+
   }
 
 }

@@ -6,7 +6,7 @@ import FpList._
 class Exercise_3_16_to_3_23 extends FunSpec with Matchers {
   describe("Exercise 3.16 add one") {
     it("should add one to the list") {
-      addOne(Nil) shouldBe Nil
+      addOne(FpNil) shouldBe FpNil
       addOne(FpList(4)) shouldBe FpList(5)
       addOne(FpList(4,5,6)) shouldBe FpList(5,6,7)
     }
@@ -14,7 +14,7 @@ class Exercise_3_16_to_3_23 extends FunSpec with Matchers {
 
   describe("Exercise 3.17 double to String") {
     it("should convert to string") {
-      doubleToString(Nil) shouldBe Nil
+      doubleToString(FpNil) shouldBe FpNil
       doubleToString(FpList(1.0D)) shouldBe FpList("1.0")
       doubleToString(FpList(1.0D, 4.78D, 8.111D)) shouldBe FpList("1.0", "4.78", "8.111")
     }
@@ -22,14 +22,14 @@ class Exercise_3_16_to_3_23 extends FunSpec with Matchers {
 
   describe("Exercise 3.18 map") {
     it("should map any function I give it") {
-      map(Nil: FpList[Int])(x => x + 1) shouldBe Nil
+      map(FpNil: FpList[Int])(x => x + 1) shouldBe FpNil
       map(FpList(3,4,5))(x => x + 1) shouldBe FpList(4,5,6)
     }
   }
 
   describe("Exercise 3.19 Filter") {
     it("should filter elements which match predicate") {
-      filter(Nil: FpList[Int])(_ > 3) shouldBe Nil
+      filter(FpNil: FpList[Int])(_ > 3) shouldBe FpNil
       filter(FpList(2,3,4,5,6,1))(_ > 3) shouldBe FpList(4,5,6)
     }
 
@@ -40,7 +40,7 @@ class Exercise_3_16_to_3_23 extends FunSpec with Matchers {
 
   describe("Exercise 3.20 flatMap") {
     it("should fltpMap an empty list to an empty list") {
-      flatMap(Nil)(x => FpList(x)) shouldBe Nil
+      flatMap(FpNil)(x => FpList(x)) shouldBe FpNil
     }
 
     it("should flatMap a single item to a transformed list with a single item") {
@@ -55,7 +55,7 @@ class Exercise_3_16_to_3_23 extends FunSpec with Matchers {
 
   describe("Exercise 3.21 Filter implemented using flatMap") {
     it("should filter elements which match predicate") {
-      filterByFlatMap(Nil: FpList[Int])(_ > 3) shouldBe Nil
+      filterByFlatMap(FpNil: FpList[Int])(_ > 3) shouldBe FpNil
       filterByFlatMap(FpList(2,3,4,5,6,1))(_ > 3) shouldBe FpList(4,5,6)
     }
 
@@ -66,15 +66,15 @@ class Exercise_3_16_to_3_23 extends FunSpec with Matchers {
 
   describe("Exercise 3.22 add two lists of numbers together") {
     it("should produce an empty list with two empty lists") {
-      zipSum(Nil, Nil) shouldBe Nil
+      zipSum(FpNil, FpNil) shouldBe FpNil
     }
 
     it("should give Nil if the second list is empty") {
-      zipSum(FpList(4,5,6), Nil) shouldBe Nil
+      zipSum(FpList(4,5,6), FpNil) shouldBe FpNil
     }
 
     it("should give Nil if the first list is empty") {
-      zipSum(Nil, FpList(4,5,6)) shouldBe Nil
+      zipSum(FpNil, FpList(4,5,6)) shouldBe FpNil
     }
 
     it("should add together the corresponding numbers in each list") {
