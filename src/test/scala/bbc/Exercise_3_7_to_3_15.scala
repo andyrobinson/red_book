@@ -140,7 +140,7 @@ class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
 
     it("should join and flatten multiple lists ") {
       flatten(FpList(FpList(1,2,3), FpNil, FpList(4,5,6), FpNil, FpList(99))) shouldBe FpList(1,2,3,4,5,6,99)
-      flatten(FpList(FpList(1,2,3,6,7,8), FpNil, FpList(4,5,6), FpNil, FpList(99))) shouldBe FpList(1,2,3,4,5,6,99)
+      flatten(FpList(FpList(1,2,3,6,7,8), FpNil, FpList(4,5,6), FpNil, FpList(99))) shouldBe FpList(1,2,3,6,7,8,4,5,6,99)
     }
 
 
