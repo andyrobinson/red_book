@@ -42,7 +42,13 @@ object FpEither {
       } yield head :: tail
     }
 
-  def traverse[E, A, B](as: List[A]) (f: A => FpEither[E, B]): FpEither[E, List[B]] = ???
+  def traverse[E, A, B](as: List[A]) (f: A => FpEither[E, B]): FpEither[E, List[B]] = as match {
+    case Nil => Right(List.empty[B])
+    case head :: tail => for {
+      hd <- f(head)
+      tl <- traverse(tail)(f)
+    } yield hd :: tl
+  }
 
 }
 
