@@ -1,12 +1,14 @@
 package bbc.stream
-import FpStream.cons
+import FpStream._
 
 sealed trait FpStream[+A] {
   def takeWhile(fn: A => Boolean): FpStream[A] = this match {
     case Cons(hd, tl) if (fn(hd())) => cons[A](hd(),tl().takeWhile(fn))
     case _ => FpStream.empty[A]
-
   }
+
+  def takeWhileFR(fn: A => Boolean): FpStream[A] =
+    this.foldRight(empty[A])((x, acc) => if (fn(x)) cons[A](x, acc) else Empty)
 
   def take(i: Int): FpStream[A] = this match {
     case Empty => FpStream.empty[A]
@@ -17,6 +19,17 @@ sealed trait FpStream[+A] {
     case Empty => List.empty[A]
     case Cons(hd, tl) => hd() :: tl().toList
   }
+
+  def foldRight[B](z: => B)(f :(A, => B) => B): B = this match {
+    case Cons(h,t) => f(h(), t().foldRight(z)(f))
+    case _ => z
+  }
+
+  def forAll(p: A => Boolean): Boolean = this match {
+    case Cons(h, t) => p(h()) && t().forAll(p)
+    case _ => true
+  }
+
 }
 
 case object Empty extends FpStream[Nothing]
