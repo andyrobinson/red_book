@@ -30,6 +30,23 @@ class Exercise5_4_to_5_7 extends FunSpec with Matchers {
 
     }
 
+    describe("Ex 5.6 head option") {
+      it("should return None if the stream is empty") {
+        val stream = FpStream.empty[Int]
+        stream.headOption shouldBe None
+      }
 
+      it("should return Some(head) if the stream has a head value") {
+        val stream = FpStream("A")
+        stream.headOption shouldBe Some("A")
+      }
+
+      it("should act lazily") {
+        def tailError: FpStream[String] = ???
+
+        val stream = FpStream.cons("B", tailError )
+        stream.headOption shouldBe Some("B")
+      }
+    }
   }
 }

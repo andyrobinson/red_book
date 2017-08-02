@@ -2,6 +2,9 @@ package bbc.stream
 import FpStream._
 
 sealed trait FpStream[+A] {
+  def headOption: Option[A] =
+    this.foldRight(Option.empty[A])((x, _) => Some(x))
+
   def takeWhile(fn: A => Boolean): FpStream[A] = this match {
     case Cons(hd, tl) if (fn(hd())) => cons[A](hd(),tl().takeWhile(fn))
     case _ => FpStream.empty[A]
