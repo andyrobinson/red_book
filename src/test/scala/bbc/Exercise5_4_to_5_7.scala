@@ -48,5 +48,30 @@ class Exercise5_4_to_5_7 extends FunSpec with Matchers {
         stream.headOption shouldBe Some("B")
       }
     }
+
+    describe("Ex 5.7 methods in terms of FoldRight") {
+      it("should implement map") {
+        val stream = FpStream(1,2,3)
+        stream.map(x => x + 1).toList shouldBe List(2,3,4)
+      }
+
+      it("should implement filter") {
+        val stream = FpStream(5,6,7)
+        stream.filter(x => x < 7).toList shouldBe List(5,6)
+        stream.filter(x => x > 10).toList shouldBe List.empty[Int]
+        FpStream.empty[String].filter(x => x == "A") shouldBe FpStream.empty[String]
+      }
+
+      it("should implement append") {
+        val stream = FpStream("A", "B", "C")
+        val stream2 = FpStream("D", "E")
+        stream.append(stream2).toList shouldBe List("A","B","C","D","E")
+      }
+
+      it("should implement flapMap") {
+        val stream = FpStream(1,2,3)
+        stream.flatMap(x => FpStream(x + 1)).toList shouldBe List(2,3,4)
+      }
+    }
   }
 }
