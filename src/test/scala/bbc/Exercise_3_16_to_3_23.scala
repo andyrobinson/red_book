@@ -65,6 +65,10 @@ class Exercise_3_16_to_3_23 extends FunSpec with Matchers {
   }
 
   describe("Exercise 3.22 add two lists of numbers together") {
+    def zipSum(list1: FpList[Int], list2: FpList[Int]): FpList[Int] =
+      zipWith(list1, list2)(_ + _ )
+
+
     it("should produce an empty list with two empty lists") {
       zipSum(FpNil, FpNil) shouldBe FpNil
     }

@@ -47,6 +47,13 @@ sealed trait FpStream[+A] {
   def flatMap[B](f: A => FpStream[B]): FpStream[B] =
     foldRight(empty[B])((x, acc) => f(x).append(acc))
 
+  def zipAll[B](s2: FpStream[B]): FpStream[(Option[A],Option[B])] =
+    unfold((this,s2)) (x => x match {
+      case (Cons(h,t),Empty) => Some(((Some(h()),None),(t(),Empty)))
+      case (Empty, Cons(h,t)) => Some(((None, Some(h())),(Empty, t())))
+      case (Cons(h1,t1), Cons(h2,t2)) => Some(((Some(h1()), Some(h2())),(t1(), t2())))
+      case _ =>  None
+    })
 }
 
 case object Empty extends FpStream[Nothing]
@@ -74,9 +81,13 @@ object FpStream {
   private def fibs2(n: Int, n1: Int): FpStream[Int] =
     cons(n, fibs2(n1, n + n1))
 
-  def unfold[A, S](z: S)(f: S => Option[(A, S)]): FpStream[A] = f(z) match {
-    case Some((a,s)) => cons(a,unfold(s)(f))
-    case _ => Empty
-  }
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): FpStream[A] =
+    f(z).fold(empty[A]){case (a,s) => cons(a,unfold(s)(f))}
+
+  def zipWith[A,B,C](s1: FpStream[A], s2: FpStream[B])(f: (A,B) => C): FpStream[C] =
+    unfold((s1,s2))(x => x match {
+      case (Cons(h1,t1),Cons(h2,t2)) => Some((f(h1(),h2()), (t1(), t2())))
+      case _ => None
+    })
 
 }
