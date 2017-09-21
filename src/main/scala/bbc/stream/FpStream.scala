@@ -54,6 +54,38 @@ sealed trait FpStream[+A] {
       case (Cons(h1,t1), Cons(h2,t2)) => Some(((Some(h1()), Some(h2())),(t1(), t2())))
       case _ =>  None
     })
+
+  def startsWithFirstAttempt[B >: A](prefix: FpStream[B]): Boolean =
+    (this, prefix) match {
+      case(Cons(h1,t1),Cons(h2,t2)) => h1() == h2() && t1().startsWithFirstAttempt(t2())
+      case (_,Empty) => true
+      case _ => false
+    }
+
+  def startsWith[B >: A](prefix: FpStream[B]): Boolean = {
+    zipAll(prefix).takeWhile(_._2 != None).forAll(x => x._1 == x._2)
+  }
+
+  def tails: FpStream[FpStream[A]] = {
+    unfold(this){
+      case Cons(h,t) => Some(Cons(h,t), t())
+      case _ => None
+    } append FpStream(empty)
+  }
+
+  // First attempt, not very efficient.  Answer uses foldRight
+  def scanRightUsingTails[B](z:B)(f: (A, => B) => B):FpStream[B] = {
+    tails.map(x => x.foldRight(z)(f))
+  }
+
+  // Second attempt, still very tricky
+  def scanRight[B](z: => B)(f: (A, => B) => B):FpStream[B] = {
+    foldRight(z,FpStream(z)) ((el, acc) => {
+      lazy val nextValue = f(el,acc._1)
+      (nextValue,cons(nextValue,acc._2))
+    })
+  }._2
+
 }
 
 case object Empty extends FpStream[Nothing]
