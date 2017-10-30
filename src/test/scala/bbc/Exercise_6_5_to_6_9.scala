@@ -3,7 +3,7 @@ package bbc
 import bbc.RNG._
 import org.scalatest.{FunSpec, Matchers}
 
-class Exercise_6_5_on extends FunSpec with Matchers {
+class Exercise_6_5_to_6_9 extends FunSpec with Matchers {
 
   describe("combinators") {
     describe("should implement double using map 6.5") {
