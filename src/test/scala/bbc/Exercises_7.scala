@@ -66,6 +66,43 @@ class Exercises_7 extends FunSpec with Matchers {
 
     }
 
+    describe("map theorems") {
+
+      trait Monad[A] {
+        def unit[A](a:A): Monad[A]
+
+      }
+
+      def id[A](a: A): A = a
+
+      def map[A,B,M[_]](a: M[A])(f: A => B): M[B] = ???
+
+      //     map(map(y)(g))(f)
+      //
+      // substitute y = unit(x)
+      //
+      // === map(map(unit(x))(g))(f)
+      // === map(unit(g(x)))(f)    -  theorem map(unit(x))(f) == unit(f(x))
+      // === unit(f(g(x))          -  ditto
+      // === unit((f compose g)(x)) - definition of compose
+      // === map(unit(x)) (f compose g)
+      // === map(y)(f compose g)    - reverse substitution
+    }
+
+    describe("7.11 choiceN") {
+      it("choose an execution based on the value returned from the first function") {
+        val items = List(unit("A"),unit("B"),unit("C"))
+        val result = choiceN(unit(1))(items)(executorService).get()
+        result shouldBe "B"
+      }
+
+      it("should implement boolean choice based on choiceN") {
+        choice(unit(true))(unit("yes"),unit("no"))(executorService).get shouldBe "yes"
+        choice(unit(false))(unit("yes"),unit("no"))(executorService).get shouldBe "no"
+      }
+
+    }
+
   }
 
 }

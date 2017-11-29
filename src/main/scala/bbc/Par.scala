@@ -57,6 +57,12 @@ object Par {
   def map[A,B](pa: Par[A])(f: A => B): Par[B] =
     map2(pa, unit(()))((a,_) => f(a))
 
+  def flatMap[A,B](pa: Par[A])(f: A => Par[B]): Par[B] =
+    (es: ExecutorService) => {
+      val innerValue = pa(es).get
+      f(innerValue)(es)
+    }
+
   def fork[A](a: => Par[A]): Par[A] =
     es => es.submit(new Callable[A] {
       def call = a(es).get()
@@ -94,6 +100,13 @@ object Par {
     var elements: List[Par[Option[A]]] = as.map(asyncF((a:A) => if (predicate(a)) Some(a) else None))
     map(sequence(elements))(_.flatten)
   }
+
+  def choiceN[A](n: Par[Int])(choices: List[Par[A]]): Par[A] =
+    flatMap(n)(choices(_))
+
+  def choice[A](cond: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
+    choiceN(map(cond)(x => if(x) 0 else 1))(List(t,f))
+
 
 }
 
