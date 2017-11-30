@@ -107,6 +107,20 @@ object Par {
   def choice[A](cond: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
     choiceN(map(cond)(x => if(x) 0 else 1))(List(t,f))
 
+  def choiceFlatMap[A](cond: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
+    flatMap(cond)(if(_) t else f)
+
+  def join[A](a: Par[Par[A]]): Par[A] =
+    es => {
+      val innerResult = a(es).get
+      innerResult(es)
+    }
+
+  def flatMapUsingJoin[A,B](pa: Par[A])(f: A => Par[B]): Par[B] =
+    join(map(pa)(f))
+
+  def joinUsingFlatmap[A](a: Par[Par[A]]): Par[A] =
+    flatMap(a)(x => x)
 
 }
 

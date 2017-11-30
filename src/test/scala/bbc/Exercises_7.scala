@@ -100,9 +100,41 @@ class Exercises_7 extends FunSpec with Matchers {
         choice(unit(true))(unit("yes"),unit("no"))(executorService).get shouldBe "yes"
         choice(unit(false))(unit("yes"),unit("no"))(executorService).get shouldBe "no"
       }
-
     }
 
-  }
+    // we already implemented flatMap for the previous exercise, and have therefore
+    // already completed choice and choiceN in terms of flatMap
+    describe("7.13 flatMap") {
+      it("applies the function to the result of the first parallel execution") {
+        val start = unit(5)
+        def mapFn(x: Int) = unit(x*2)
 
+        flatMap(start)(mapFn)(executorService).get shouldBe 10
+      }
+
+      it("should implement boolean choice based on flatMap") {
+        choiceFlatMap(unit(true))(unit("yes"),unit("no"))(executorService).get shouldBe "yes"
+        choiceFlatMap(unit(false))(unit("yes"),unit("no"))(executorService).get shouldBe "no"
+      }
+    }
+
+    describe("7.14 join (flatten?)") {
+      it("executes a parallel operation within an operation") {
+        def nested = unit(unit("A"))
+        join(nested)(executorService).get shouldBe "A"
+      }
+
+      it("should do flatMap using join") {
+        val start = unit(6)
+        def mapFn(x: Int) = unit(x*3)
+
+        flatMapUsingJoin(start)(mapFn)(executorService).get shouldBe 18
+      }
+
+      it("should do join using flatMap") {
+        def nested = unit(unit("B"))
+        joinUsingFlatmap(nested)(executorService).get shouldBe "B"
+      }
+    }
+  }
 }
