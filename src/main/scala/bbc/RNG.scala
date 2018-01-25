@@ -8,6 +8,12 @@ trait RNG {
 }
 
 object RNG {
+
+  def until(rng: RNG)(pred: Int => Boolean): (Int, RNG) = {
+    val (next,rng2) = rng.nextInt
+    if (pred(next)) (next,rng2) else until(rng2)(pred)
+  }
+
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
     val (next,rng2) = rng.nextInt
     val safeNext = if (next == Int.MinValue) Int.MaxValue else abs(next)
