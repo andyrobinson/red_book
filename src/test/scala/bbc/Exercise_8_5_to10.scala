@@ -1,28 +1,6 @@
-package bbc.gen2
+package bbc
 
-import bbc.{RNG, State}
 import org.scalatest.{FunSpec, Matchers}
-
-case class Gen[+A](sample: State[RNG,A])
-
-object Gen {
-  def unit[A](a: => A): Gen[A] = Gen(State.unit(a))
-
-  def boolean: Gen[Boolean] = Gen(State(rng => {
-    val (n, rng2) = rng.nextInt
-    ((n % 2 == 0), rng2)
-  }))
-
-  def choose(start: Int, stopExclusive: Int): Gen[Int] = Gen({
-    val state = State(RNG.nonNegativeInt)
-    state.map(n => start + n % (stopExclusive - start))
-  })
-
-  def listOfN[A](n: Int, g: Gen[A]): Gen[List[A]] = Gen({
-    val stateList = List.fill(n)(State(g.sample.run))
-    State.sequence(stateList)
-  })
-}
 
 case class seqRNG(seq: Seq[Int]) extends RNG {
   override def nextInt: (Int, RNG) = seq match {
@@ -58,6 +36,13 @@ class Exercises_8_5_to10 extends FunSpec with Matchers {
     it("should generate a list of numbers") {
       val a = Gen.listOfN(5, Gen.choose(5,10))
       a.sample.run(seqRandom)._1 shouldBe List(5,7,8,7,6)
+    }
+
+    it("should generate strings") {
+      val seqAsciiOffsetBy48: RNG = seqRNG(Seq(24,53,60,60,63))
+
+      val a = Gen.string(5)
+      a.sample.run(seqAsciiOffsetBy48)._1 shouldBe "Hello"
     }
   }
 }

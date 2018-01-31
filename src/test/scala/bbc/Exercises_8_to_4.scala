@@ -1,6 +1,7 @@
-package bbc
+package bbc.gen1
 
-import bbc.Prop.{FailedCase, GenSimple}
+import Prop.{FailedCase, GenSimple}
+import bbc.{RNG, State}
 import org.scalatest.{FunSpec, Matchers}
 
 trait PropBoolean {
@@ -17,7 +18,6 @@ trait PropBoolean {
 
 object Prop {
   type FailedCase = String
-  // type SuccessCount = Int // causes lots of compiler problems
   type GenSimple[A] = State[RNG,A]
 }
 
