@@ -1,6 +1,14 @@
 package bbc
 
-case class Gen[+A](sample: State[RNG,A])
+case class Gen[+A](sample: State[RNG,A]) {
+  def flatMap[B](f: A => Gen[B]): Gen[B] = {
+    Gen(sample.flatMap(f(_).sample))
+  }
+
+  def listOfN(size: Gen[Int]): Gen[List[A]] = {
+    size.flatMap(n => Gen.listOfN(n,this))
+  }
+}
 
 object Prop {
   type FailedCase = String
