@@ -5,7 +5,7 @@ case class Gen[+A](sample: State[RNG,A]) {
     Gen(sample.flatMap(f(_).sample))
   }
 
-  def listOfN(size: Gen[Int]): Gen[List[A]] = {
+  def listOfGenSize(size: Gen[Int]): Gen[List[A]] = {
     size.flatMap(n => Gen.listOfN(n,this))
   }
 }
@@ -39,5 +39,13 @@ object Gen {
     asciiCodeGen.sample.map(codes => codes.foldLeft("")((acc,x) => acc + x.toChar))
   })
 
+  def union[A](g1: Gen[A], g2: Gen[A]): Gen[A] = boolean.flatMap{
+    x => if(x) g1 else g2
+  }
+
+  def weighted[A](g1: (Gen[A],Double), g2: (Gen[A], Double)): Gen[A] = {
+      val threshold = g1._2 / (g1._2 + g2._2)
+      Gen(State(RNG.double).flatMap(n => {if (n <= threshold) g1._1.sample else g2._1.sample}))
+  }
 
 }
