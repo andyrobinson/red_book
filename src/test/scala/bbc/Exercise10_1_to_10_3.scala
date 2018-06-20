@@ -2,11 +2,6 @@ package bbc
 
 import org.scalatest.{FunSpec, Matchers}
 
-trait Monoid[A] {
-  def op(a1: A, a2 : A): A
-  def zero: A
-}
-
 class Exercise10_1_to_10_3 extends FunSpec with Matchers {
 
   private def SatisfiesMonoidLaws[A](monoid: Monoid[A], a1:A, a2: A, a3: A, includeZeroTestCaseTest: Boolean = true): Unit = {
@@ -94,11 +89,9 @@ class Exercise10_1_to_10_3 extends FunSpec with Matchers {
       def a3 (z: Int) = z * 2
 
       import IntEndoMonoid._
-      withClue("Associativity") {op(op(a1,a2),a3)(45) shouldBe op(a1, op(a2,a3))(45)}
-      withClue("Zero behaviour") {op(zero,a1)(64) shouldBe a1(64)}
-      withClue("Zero behaviour") {op(a2,zero)(-12) shouldBe a2(-12)}
-
-
+      op(op(a1,a2),a3)(45) shouldBe op(a1, op(a2,a3))(45)
+      op(zero,a1)(64) shouldBe a1(64)
+      op(a2,zero)(-12) shouldBe a2(-12)
     }
   }
 }
