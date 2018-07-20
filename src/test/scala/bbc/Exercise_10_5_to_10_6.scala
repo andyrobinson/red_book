@@ -8,7 +8,13 @@ class Exercise_10_5_to_10_6 extends FunSpec with Matchers {
     as.foldRight(m.zero)((a,b) => m.op(f(a),b))
   }
 
-  def foldLeftFromFoldMap[A,B](list: FpList[A], accumulator: B)(f: (B, A) => B): B = ???
+  def foldLeftFromFoldMap[A,B](list: List[A], accumulator: B)(f: (B, A) => B): B = {
+    val foldMonoid = new Monoid[B => B] {
+      override def op(fb1: B => B, fb2: B => B) = fb2 compose fb1
+      override def zero = b => b
+    }
+    foldMap(list, foldMonoid)(a => (b: B) => f(b,a))(accumulator)
+  }
 
   val addMonoid = new Monoid[Int] {
     override def op(a1: Int, a2: Int): Int = a1 + a2
@@ -35,18 +41,18 @@ class Exercise_10_5_to_10_6 extends FunSpec with Matchers {
 
   describe("foldLeft from foldMap") {
     it("should return base value for empty list") {
-      foldLeftFromFoldMap(FpNil: FpList[Int], 99)(_ + _) shouldBe 99
+      foldLeftFromFoldMap(Nil: List[Int], 99)(_ + _) shouldBe 99
     }
 
     it("should apply the function successively from the left") {
-      val result = foldLeftFromFoldMap(FpList("P", "Q", "R"), "")((str, acc) => str + acc)
+      val result = foldLeftFromFoldMap(List("P", "Q", "R"), "")((str, acc) => str + acc)
       result shouldBe "PQR"
     }
 
     it("should reverse the list") {
-      val result = foldLeftFromFoldMap(FpList(1, 2, 3), FpNil: FpList[Int])((acc, value) => Cons(value, acc))
+      val result = foldLeftFromFoldMap(List(1, 2, 3), Nil: List[Int])((acc, value) => value :: acc)
 
-      result shouldBe (FpList(3, 2, 1))
+      result shouldBe (List(3, 2, 1))
     }
   }
 }
