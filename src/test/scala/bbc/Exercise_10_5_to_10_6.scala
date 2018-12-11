@@ -16,6 +16,14 @@ class Exercise_10_5_to_10_6 extends FunSpec with Matchers {
     foldMap(list, foldMonoid)(a => (b: B) => f(b,a))(accumulator)
   }
 
+  def foldRightFromFoldMap[A,B](list: List[A], accumulator: B)(f: (A, B) => B): B = {
+    val foldMonoid = new Monoid[B => B] {
+      override def op(fb1: B => B, fb2: B => B) = fb1 compose fb2
+      override def zero = b => b
+    }
+    foldMap(list, foldMonoid)(a => (b: B) => f(a, b))(accumulator)
+  }
+
   val addMonoid = new Monoid[Int] {
     override def op(a1: Int, a2: Int): Int = a1 + a2
     override def zero: Int = 0
@@ -55,4 +63,22 @@ class Exercise_10_5_to_10_6 extends FunSpec with Matchers {
       result shouldBe (List(3, 2, 1))
     }
   }
+
+  describe("foldRight from foldMap") {
+    it("should return base value for empty list") {
+      foldRightFromFoldMap(Nil: List[Int], 99)(_ + _) shouldBe 99
+    }
+
+    it("should apply the function successively from the right") {
+      val result = foldRightFromFoldMap(List("A", "B", "C"), "")((acc, str) => str + acc)
+      result shouldBe "CBA"
+    }
+
+    it("should preserve the order of the list") {
+      val result = foldRightFromFoldMap(List(1, 2, 3), Nil: List[Int])((value, acc) => value :: acc)
+
+      result shouldBe (List(1, 2, 3))
+    }
+  }
+
 }

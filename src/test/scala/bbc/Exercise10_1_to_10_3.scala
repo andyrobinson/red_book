@@ -4,7 +4,7 @@ import org.scalatest.{FunSpec, Matchers}
 
 class Exercise10_1_to_10_3 extends FunSpec with Matchers {
 
-  private def SatisfiesMonoidLaws[A](monoid: Monoid[A], a1:A, a2: A, a3: A, includeZeroTestCaseTest: Boolean = true): Unit = {
+  protected def SatisfiesMonoidLaws[A](monoid: Monoid[A], a1:A, a2: A, a3: A, includeZeroTestCaseTest: Boolean = true): Unit = {
     import monoid._
     if (includeZeroTestCaseTest) {
       withClue("Test values must not be zero") {a1 shouldNot be(zero)}
