@@ -12,7 +12,7 @@ object FoldableTree extends Foldable[Tree] {
   override def foldLeft[A, B](collection: Tree[A])(zero: B)(fn: (B, A) => B): B =
     collection match {
       case Leaf(a) => fn(zero, a)
-      case Branch(l,r) => foldLeft(l)(foldLeft(r)(zero)(fn))(fn)
+      case Branch(l,r) => foldLeft(r)(foldLeft(l)(zero)(fn))(fn)
     }
 
   override def foldMap[A, B](collection: Tree[A])(f: A => B)(mb: Monoid[B]): B = {
@@ -43,7 +43,7 @@ class Exercise_10_13 extends FunSpec with Matchers {
       FoldableTree.foldRight(stringTree)("")((x: String,y: String) => x + y) shouldBe "ABCD"
 
       FoldableTree.foldLeft(tree)(0)((x: Int,y: Int) => x + y) shouldBe 10
-      FoldableTree.foldLeft(stringTree)("")((x: String,y: String) => x + y) shouldBe "DCBA"
+      FoldableTree.foldLeft(stringTree)("")((x: String,y: String) => x + y) shouldBe "ABCD"
 
       FoldableTree.foldMap(tree)((x: Int) => x + 1)(addMonoid) shouldBe 14
       FoldableTree.foldMap(stringTree)((x) => x + "@")(concatMonoid) shouldBe "A@B@C@D@"
