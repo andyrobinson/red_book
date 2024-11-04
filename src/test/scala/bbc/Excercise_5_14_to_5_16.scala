@@ -1,9 +1,10 @@
 package bbc
 
 import bbc.stream.FpStream
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Excercise_5_14_to_5_16 extends FunSpec with Matchers {
+class Excercise_5_14_to_5_16 extends AnyFunSpec with Matchers {
 
   describe("starts with") {
     it("should reject non prefixes") {

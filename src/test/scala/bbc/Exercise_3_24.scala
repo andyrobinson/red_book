@@ -1,9 +1,10 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 import FpList._
 
-class Exercise_3_24 extends FunSpec with Matchers {
+class Exercise_3_24 extends AnyFunSpec with Matchers {
   describe("ex 3.24 subsequence") {
     it("Nil is a subsequence of anything") {
       hasSubsequence(FpNil, FpNil) shouldBe true

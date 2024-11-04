@@ -2,7 +2,8 @@ package bbc.gen1
 
 import Prop.{FailedCase, GenSimple}
 import bbc.{RNG, State}
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 trait PropBoolean {
   def check: Boolean
@@ -45,7 +46,7 @@ case class seqRNG(seq: Seq[Int]) extends RNG {
   }
 }
 
-class Exercises_8 extends FunSpec with Matchers {
+class Exercises_8 extends AnyFunSpec with Matchers {
   describe("Prop with boolean check") {
 
     val success = new PropBoolean {

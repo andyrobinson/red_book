@@ -2,10 +2,11 @@ package bbc
 
 import java.util.concurrent.{Executors, Future}
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 import bbc.Par._
 
-class Exercises_7 extends FunSpec with Matchers {
+class Exercises_7 extends AnyFunSpec with Matchers {
 
   describe("Par") {
 

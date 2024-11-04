@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise_10_5_to_10_6 extends FunSpec with Matchers {
+class Exercise_10_5_to_10_6 extends AnyFunSpec with Matchers {
 
   def foldMap[A,B](as: List[A], m : Monoid[B])(f: A => B): B = {
     as.foldRight(m.zero)((a,b) => m.op(f(a),b))

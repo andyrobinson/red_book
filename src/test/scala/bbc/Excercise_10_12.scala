@@ -1,7 +1,7 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
-
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 object FoldableFpList extends Foldable[FpList] {
 
@@ -15,7 +15,7 @@ object FoldableFpList extends Foldable[FpList] {
     FpList.foldRight(FpList.map(collection)(fn), mb.zero)(mb.op)
 }
 
-class Excercise_10_12 extends FunSpec with Matchers {
+class Excercise_10_12 extends AnyFunSpec with Matchers {
 
   describe("Foldable List") {
 

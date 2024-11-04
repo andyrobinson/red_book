@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise10_1_to_10_3 extends FunSpec with Matchers {
+class Exercise10_1_to_10_3 extends AnyFunSpec with Matchers {
 
   protected def SatisfiesMonoidLaws[A](monoid: Monoid[A], a1:A, a2: A, a3: A, includeZeroTestCaseTest: Boolean = true): Unit = {
     import monoid._

@@ -1,13 +1,14 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 import RNG._
 
 case class NotRandom(value: Int) extends RNG {
   override def nextInt: (Int, RNG) = (value,this)
 }
 
-class Exercises_6_1_6_4 extends FunSpec with Matchers {
+class Exercises_6_1_6_4 extends AnyFunSpec with Matchers {
 
   describe("Non negative random numbers 6.1") {
     it("should pass on positive numbers") {

@@ -1,6 +1,7 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 object FoldableOption extends Foldable[Option] {
   override def foldRight[A, B](collection: Option[A])(zero: B)(fn: (A, B) => B): B =
@@ -23,7 +24,7 @@ object FoldableOption extends Foldable[Option] {
 
 }
 
-class Exercise_10_14 extends FunSpec with Matchers {
+class Exercise_10_14 extends AnyFunSpec with Matchers {
 
   describe("Foldable Option") {
 

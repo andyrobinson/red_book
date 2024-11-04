@@ -1,8 +1,9 @@
 package bbc.stream
 import bbc.stream.FpStream.{zipWith, unfold}
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise_5_12_to_5_13 extends FunSpec with Matchers {
+class Exercise_5_12_to_5_13 extends AnyFunSpec with Matchers {
   describe("5.12") {
     it("can generate fib") {
       val fib10 = unfold(0,1)({case (n,n1) => Some((n,(n1, n + n1)))}).take(10).toList

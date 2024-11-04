@@ -1,10 +1,11 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
 
-class Exercise_3_1_to_3_6 extends FunSpec with Matchers {
+class Exercise_3_1_to_3_6 extends AnyFunSpec with Matchers {
   describe("Exercise 3.1 pattern matching") {
     it("pick out the right one") {
       val x: Int = FpList(1, 2, 3, 4, 5) match {

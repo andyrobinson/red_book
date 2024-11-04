@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise2_3_to_2_5 extends FunSpec with Matchers {
+class Exercise2_3_to_2_5 extends AnyFunSpec with Matchers {
 
   def add(a:Int, b:Int) = a + b
   def stringToInt(a: String): Int = a.toInt

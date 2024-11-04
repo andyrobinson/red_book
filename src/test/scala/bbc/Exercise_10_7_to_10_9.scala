@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise_10_7_to_10_9 extends FunSpec with Matchers {
+class Exercise_10_7_to_10_9 extends AnyFunSpec with Matchers {
 
    def foldMapV[A,B](as: IndexedSeq[A], m : Monoid[B])(f: A => B): B = {
      as.length match {

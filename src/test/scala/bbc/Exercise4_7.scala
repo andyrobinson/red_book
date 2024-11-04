@@ -1,9 +1,10 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 import FpEither._
 
-class Exercise4_7 extends FunSpec with Matchers {
+class Exercise4_7 extends AnyFunSpec with Matchers {
 
   def moreThan2(i: Int): FpEither[String, Int] = if (i > 2) Right(i) else Left(s"${i} is too small")
 

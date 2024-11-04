@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise4_3 extends FunSpec with Matchers {
+class Exercise4_3 extends AnyFunSpec with Matchers {
 
   def map2[A,B,C](a: Option[A], b: Option[B])(f: (A,B)=>C): Option[C] =
       a.flatMap(a1 => b.map(b1 => f(a1,b1)))

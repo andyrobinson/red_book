@@ -1,10 +1,11 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import FpList._
 
-class Exercise_3_7_to_3_15 extends FunSpec with Matchers {
+class Exercise_3_7_to_3_15 extends AnyFunSpec with Matchers {
   describe("Exercise 3.8 foldRight") {
     it("should reverse the list?") {
       val result = foldRight(FpList(1, 2, 3), FpNil: FpList[Int])(Cons(_, _))

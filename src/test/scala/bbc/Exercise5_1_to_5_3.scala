@@ -1,11 +1,12 @@
 package bbc
 
 import bbc.stream.FpStream
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
 
-class Exercise5_1_to_5_3 extends FunSpec with Matchers {
+class Exercise5_1_to_5_3 extends AnyFunSpec with Matchers {
 
   def infiniteIntegers(start: Int): FpStream[Int] = {
     FpStream.cons(start, infiniteIntegers(start + 1))

@@ -1,9 +1,10 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 import CandyMachine._
 
-class Exercise_6_11 extends FunSpec with Matchers{
+class Exercise_6_11 extends AnyFunSpec with Matchers{
   describe("the Candy Machine") {
     it("a locked machine with candy should accept a coin and unlock") {
       val machine = CandyMachine(true, 2, 0)

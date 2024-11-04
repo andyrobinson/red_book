@@ -2,9 +2,10 @@ package bbc
 import bbc.State._
 
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercises_6_10  extends FunSpec with Matchers {
+class Exercises_6_10  extends AnyFunSpec with Matchers {
   def counter(currentValue: Int): (Int, Int) = (currentValue, currentValue + 1)
   def stringCounter(currentValue: Int): (String, Int) = (currentValue.toString, currentValue + 1)
 

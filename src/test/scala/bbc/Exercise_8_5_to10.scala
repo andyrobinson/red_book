@@ -1,6 +1,7 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 case class seqRNG(seq: Seq[Int]) extends RNG {
   override def nextInt: (Int, RNG) = seq match {
@@ -13,7 +14,7 @@ case class fixed(int: Int) extends RNG {
   override def nextInt: (Int, RNG) = (int, fixed(int))
 }
 
-class Exercises_8_5_to10 extends FunSpec with Matchers {
+class Exercises_8_5_to10 extends AnyFunSpec with Matchers {
 
   val fixedRNG = fixed(1)
   val seqRandom: seqRNG = seqRNG(Seq(10,67,3,42,11,17,87))

@@ -1,9 +1,10 @@
 package bbc
 
 import bbc.stream.FpStream._
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise_5_8_to_5_11 extends FunSpec with Matchers {
+class Exercise_5_8_to_5_11 extends AnyFunSpec with Matchers {
   describe("5.8 ") {
     it("should produce an infinite stream of any number") {
       constant(5).take(3).toList shouldBe List(5,5,5)

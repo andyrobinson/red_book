@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise_3_25_to_3_29 extends FunSpec with Matchers {
+class Exercise_3_25_to_3_29 extends AnyFunSpec with Matchers {
   describe("Tree size") {
     it("should return 1 for a leaf") {
       Tree.size(Leaf(1)) shouldBe 1

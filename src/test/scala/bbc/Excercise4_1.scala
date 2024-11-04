@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Excercise4_1 extends FunSpec with Matchers {
+class Excercise4_1 extends AnyFunSpec with Matchers {
   describe("basic Option stuff") {
     it("should do map") {
       FpSome(1).map(_ + 1) shouldBe FpSome(2)

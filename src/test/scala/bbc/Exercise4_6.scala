@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise4_6 extends FunSpec with Matchers {
+class Exercise4_6 extends AnyFunSpec with Matchers {
 
   it("should implement map") {
     val right: FpEither[String, Int] = Right(1)

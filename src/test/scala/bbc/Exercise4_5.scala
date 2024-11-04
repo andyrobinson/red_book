@@ -1,10 +1,11 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.util.Try
 
-class Exercise4_5 extends FunSpec with Matchers {
+class Exercise4_5 extends AnyFunSpec with Matchers {
 
   def traverse[A,B](a: List[A])(f: A => Option[B]): Option[List[B]] = a match {
     case Nil => Some(List.empty[B])

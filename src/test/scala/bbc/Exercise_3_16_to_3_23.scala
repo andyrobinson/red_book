@@ -1,9 +1,10 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 import FpList._
 
-class Exercise_3_16_to_3_23 extends FunSpec with Matchers {
+class Exercise_3_16_to_3_23 extends AnyFunSpec with Matchers {
   describe("Exercise 3.16 add one") {
     it("should add one to the list") {
       addOne(FpNil) shouldBe FpNil

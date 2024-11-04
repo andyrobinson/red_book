@@ -1,10 +1,11 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
 
-class Exercise2_2 extends FunSpec with Matchers {
+class Exercise2_2 extends AnyFunSpec with Matchers {
 
   describe("Is sorted") {
 

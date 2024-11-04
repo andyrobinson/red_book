@@ -1,8 +1,9 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Excercise4_4 extends FunSpec with Matchers {
+class Excercise4_4 extends AnyFunSpec with Matchers {
   def sequence[A](a: List[Option[A]]): Option[List[A]] =  a match {
     case Nil => Some(List.empty[A])
     case head :: tail => head.flatMap(el => sequence(tail).map(el :: _))

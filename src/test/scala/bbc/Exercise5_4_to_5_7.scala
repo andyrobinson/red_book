@@ -1,9 +1,10 @@
 package bbc
 
 import bbc.stream.FpStream
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class Exercise5_4_to_5_7 extends FunSpec with Matchers {
+class Exercise5_4_to_5_7 extends AnyFunSpec with Matchers {
 
   describe("5.4 ForAll") {
     it("should return true for an empty stream") {

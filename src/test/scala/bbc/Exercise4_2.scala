@@ -1,11 +1,12 @@
 package bbc
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import math._
 import scala.util.Try
 
-class Exercise4_2 extends FunSpec with Matchers {
+class Exercise4_2 extends AnyFunSpec with Matchers {
 
   def mean(xs: Seq[Double]): Option[Double] = if (xs.isEmpty) None else Some(xs.sum/xs.size)
 
